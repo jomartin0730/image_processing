@@ -1,0 +1,3 @@
+log_path:
+    total: 'log/total.log'
+

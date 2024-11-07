@@ -1,0 +1,21 @@
+3Dfile_paths:
+  - type: 'pcd_file'
+    path: 'data/sample_data.pcd'
+  - type: 'ply_file'
+    path: 'data/sample_data.ply'
+
+2Dfile_paths:
+    depth_map: 'data1/depth_map.png'
+    heat_map: 'data/heat_map.png'
+
+algorithm_settings:
+  noise_removal:
+    algorithms: 'statistical'
+    params:
+      nb_neighbors: 20
+      std_ratio: 2.0
+    # algorithms: 'radius'
+    # params:
+    #   nb_points: 16
+    #   radius: 0.05
+  projection_vector: [1, 0, 0]  # 투영 방향 설정
