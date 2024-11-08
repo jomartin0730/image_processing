@@ -3,12 +3,10 @@ import matplotlib.pyplot as plt
 from typing import Tuple, Optional
 
 from config_manager import ConfigFileManager
-from logger import Logger
 
 class DataManager:
     def __init__(self) -> None:
         self.cm: ConfigFileManager = ConfigFileManager()
-        self.logger: Logger = Logger(self.cm.get_log_path(), __class__.__name__)
 
     def get_depths(self, projected_points: np.ndarray) -> Tuple[float, float]:
         max_depth: float = np.max(projected_points[:, 0])  # x 좌표에서 최대 깊이

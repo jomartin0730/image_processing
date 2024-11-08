@@ -5,8 +5,13 @@
     path: 'data/sample_data.ply'
 
 2Dfile_paths:
-    depth_map: 'data1/depth_map.png'
+    depth_map: 'data/depth_map.png'
     heat_map: 'data/heat_map.png'
+
+log_settings:
+    path: 'log/total.log'
+    use_file: true
+    use_print: true
 
 algorithm_settings:
   noise_removal:

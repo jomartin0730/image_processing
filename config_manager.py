@@ -6,44 +6,51 @@ from typing import Optional, Tuple, Dict, Any
 from logger import Logger
 
 class ConfigFileManager:
-    _instance: Optional['ConfigFileManager'] = None
-
-    def __new__(cls, *args, **kwargs) -> 'ConfigFileManager':
-        if not cls._instance:
-            cls._instance = super(ConfigFileManager, cls).__new__(cls)
-            cls._instance.initialized = False
-        return cls._instance
-    
     def __init__(self) -> None:
-        if not self.initialized:
-            self.log_config: str = 'config/log.yaml'    # 로그 파일 경로
-            self.img_config: str = 'config/image.yaml'  # 설정 파일 경로
-            self.logger: Logger = Logger(self.get_log_path(), __class__.__name__)
-            self.initialized = True
-        
-    def init_logger(self, msg: str) -> None:
-        self.help_logger: Logger = Logger('log/log_yaml.log', __class__.__name__)
-        self.help_logger.exception(msg)
-    
-    def get_log_path(self) -> Optional[str]:
-        try:
-            with open(self.log_config, 'r', encoding='UTF8') as file:
-                config: Dict[str, Any] = yaml.safe_load(file)
-            log_path = config['log_path']['total']
-            if not os.path.exists(os.path.dirname(log_path)):
-                raise FileNotFoundError(f'{log_path} doesn\'t exist.')
-            else: #############로그 파일 여러개 등록 못한다????
-                #self.init_logger(f'Successfully read log file from {log_path}')
-                return log_path
-
-        except FileNotFoundError as fnf:
-            self.init_logger(f"[{inspect.currentframe().f_code.co_name}] Unavailable log file--> {fnf}")
-        except KeyError as ke:
-            self.init_logger(f"[{inspect.currentframe().f_code.co_name}] Using the wrong key--> {ke}")
-        except Exception as e:
-            self.init_logger(f"[{inspect.currentframe().f_code.co_name}] Check the error log--> {e}")
+        self.img_config: str = 'config/image.yaml'  # 설정 파일 경로
+        self.log_path: str
+        self.use_file: bool
+        self.use_print: bool
+        self.log_path, self.use_file, self.use_print = self.get_log_settings()
+        self.logger: Logger = self.init_logger()      
             
-                    
+    def init_logger(self) -> Logger:
+        return Logger(self.log_path, self.use_file, self.use_print)
+    
+    def log_error(self, msg: str) -> None:
+        self.help_logger: Logger = Logger('log/yaml_error.log', True, True)
+        self.help_logger.exception(msg, f"[{self.__class__.__name__}] ")
+
+    def get_log_settings(self) -> Optional[Tuple[str, bool, bool]]:
+        try:
+            with open(self.img_config, 'r', encoding='UTF8') as file:
+                config: Dict[str, Any] = yaml.safe_load(file)
+                
+            log_path: str = config['log_settings']['path']
+            use_file: bool = config['log_settings']['use_file']
+            use_print: bool = config['log_settings']['use_print']
+
+            if not isinstance(use_file, bool):
+                raise ValueError("use_file must be a boolean value.")
+            if not isinstance(use_print, bool):
+                raise ValueError("use_print must be a boolean value.")
+            
+            if not os.path.exists(os.path.dirname(log_path)) or log_path is None:
+                raise FileNotFoundError(f'{log_path} doesn\'t exist.')
+            else:
+                return log_path, use_file, use_print
+        
+        except ValueError as ve:
+            self.log_error(f"{ve}")
+        except FileNotFoundError as fnf:
+            self.log_error(f"Unavailable file. Check the yaml file--> {fnf}")
+        except KeyError as ke:
+            self.log_error(f"Using the wrong yaml key. Check the yaml file--> {ke}")
+        except Exception as e:
+            self.log_error(f"Check the error log--> {e}")
+
+        return None
+              
     def get_img_path(self) -> Optional[Tuple[str, Dict[str, Any]]]:
         try:
             with open(self.img_config, 'r', encoding='UTF8') as file:
@@ -58,29 +65,48 @@ class ConfigFileManager:
                     self.logger.info(f'Successfully read {path["type"]} from {path["path"]}')
                     return path['path'], config
 
-            ######raise ValueError(f"{path['type']} need Check")
+            raise FileNotFoundError(f"Check the {path['type']} and {path['path']}")
 
         except ValueError as ve:
             self.logger.exception(ve)
         except FileNotFoundError as fnf:
-            self.logger.exception(f"[{inspect.currentframe().f_code.co_name}] Unavailable log file--> {fnf}")
+            self.logger.exception(f"Unavailable image file. Check the yaml file--> {fnf}")
         except KeyError as ke:
-            self.logger.exception(f"[{inspect.currentframe().f_code.co_name}] Using the wrong key--> {ke}")
+            self.logger.exception(f"Using the wrong yaml key. Check the yaml file--> {ke}")
         except Exception as e:
-            self.logger.exception(f"[{inspect.currentframe().f_code.co_name}] Check the error log--> {e}")
+            self.logger.exception(f"Check the error log--> {e}")
 
     def check_path(self, path: Optional[str]) -> bool:
         if path is None:
-            self.logger.error("Path is Vacant, " + 
-                             f"Called from: \"{inspect.currentframe().f_back.f_code.co_name}\"")
+            self.logger.error(
+                f"[{inspect.currentframe().f_back.f_code.co_name}] "
+                f"Path is None", 
+                f"[{self.__class__.__name__}] "
+            )
             return False
+
+        directory = os.path.dirname(path)
         
-        elif not os.path.exists(os.path.dirname(path)):  ###### 새롭게 디렉토리 생성할건가?
-            self.logger.error(f"Path is Wrong: {path}, " +
-                              f"Called from: \"{inspect.currentframe().f_back.f_code.co_name}\"")
+        # 디렉토리 존재 여부 확인 
+        if not os.path.exists(directory): ##-> save image의 경우 이상함 수정 필요
+            self.logger.error(
+                f"[{inspect.currentframe().f_back.f_code.co_name}] "
+                f"Directory does not exist: {directory}", 
+                f"[{self.__class__.__name__}] "
+            )
             return False
-        
-        else:
-            self.logger.info(f"Correct Path: {path}" +
-                             f"Called from: \"{inspect.currentframe().f_back.f_code.co_name}\"")
-            return True
+
+        # 파일 존재 여부 확인 --> depth_map과 분리 필요
+        # if not os.path.isfile(path):
+        #     self.logger.error(
+        #         f"[{inspect.currentframe().f_back.f_code.co_name}] "
+        #         f"File does not exist: {path}", 
+        #         f"[{self.__class__.__name__}] "
+        #     )
+        #     return False
+
+        # 모든 확인이 통과한 경우
+        self.logger.info(
+            f"Correct path: {path}", 
+        )
+        return True
