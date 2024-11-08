@@ -20,8 +20,8 @@ class DataProcessing:
         
         if algorithm == 'statistical':
             cl, ind = pcd.remove_statistical_outlier(
-                nb_neighbors=params['nb_neighbors'], 
-                std_ratio=params['std_ratio']
+                nb_neighbors=params['nb_neighbors'], ####에러처리 할건가??
+                std_ratio=params['std_ratio'] ####에러처리 할건가??
             )
             self.dm.cm.logger.info(f'Number of points after noise removal: {len(np.asarray(cl.points))}')
             return cl
@@ -37,11 +37,11 @@ class DataProcessing:
         
         else:
             self.dm.cm.logger.error('Check removal algorithm')
-            raise KeyError("Unknown noise removal algorithm")
+            raise ValueError("Unknown noise removal algorithm")
  
     def project_to_2d(self, 
                       pcd: o3d.geometry.PointCloud, 
-                      projection_vector: np.ndarray
+                      projection_vector: np.ndarray ####에러처리 할건가??
         ) -> np.ndarray:
         
         points: np.ndarray = np.asarray(pcd.points)

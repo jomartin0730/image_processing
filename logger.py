@@ -5,23 +5,6 @@ class Logger:
     def __init__(self, path: str, file: bool, print: bool) -> None:
         self.setup_logger(path, file, print)
 
-    # def __init__(self, path: str, name: str) -> None:
-    #     self.log_path: str = path
-    #     self.setup_logger(name)
-
-
-    # def setup_logger(self, name: str) -> None:
-    #     logging.basicConfig(
-    #         level=logging.DEBUG,
-    #         format='%(asctime)s [%(levelname)s] [%(name)s] %(message)s',
-    #         datefmt='%Y-%m-%d %H:%M:%S',
-    #         handlers=[
-    #             logging.FileHandler(self.log_path),
-    #             logging.StreamHandler()
-    #         ]
-    #     )
-    #     self.logger: logging.Logger = logging.getLogger(name)
-
     def setup_logger(self, path:str, file: bool, print: bool):
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.DEBUG)

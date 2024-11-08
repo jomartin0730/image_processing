@@ -35,7 +35,7 @@ class ConfigFileManager:
             if not isinstance(use_print, bool):
                 raise ValueError("use_print must be a boolean value.")
             
-            if not os.path.exists(os.path.dirname(log_path)) or log_path is None:
+            if not os.path.exists(os.path.dirname(log_path)) or not log_path:
                 raise FileNotFoundError(f'{log_path} doesn\'t exist.')
             else:
                 return log_path, use_file, use_print
@@ -68,7 +68,7 @@ class ConfigFileManager:
             raise FileNotFoundError(f"Check the {path['type']} and {path['path']}")
 
         except ValueError as ve:
-            self.logger.exception(ve)
+            self.logger.exception(f"{ve}")
         except FileNotFoundError as fnf:
             self.logger.exception(f"Unavailable image file. Check the yaml file--> {fnf}")
         except KeyError as ke:
@@ -76,23 +76,21 @@ class ConfigFileManager:
         except Exception as e:
             self.logger.exception(f"Check the error log--> {e}")
 
-    def check_path(self, path: Optional[str]) -> bool:
-        if path is None:
+    def check_path(self, path: str) -> bool:
+        if not path:
             self.logger.error(
                 f"[{inspect.currentframe().f_back.f_code.co_name}] "
-                f"Path is None", 
-                f"[{self.__class__.__name__}] "
+                f"Path is empty", 
+                f"[{inspect.currentframe().f_back.f_locals['self'].__class__.__name__}] "
             )
             return False
 
-        directory = os.path.dirname(path)
-        
         # 디렉토리 존재 여부 확인 
-        if not os.path.exists(directory): ##-> save image의 경우 이상함 수정 필요
+        if not os.path.exists(os.path.dirname(path)):
             self.logger.error(
                 f"[{inspect.currentframe().f_back.f_code.co_name}] "
-                f"Directory does not exist: {directory}", 
-                f"[{self.__class__.__name__}] "
+                f"Directory does not exist: {path}", 
+                f"[{inspect.currentframe().f_back.f_locals['self'].__class__.__name__}] "
             )
             return False
 

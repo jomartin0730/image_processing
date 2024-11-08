@@ -1,5 +1,6 @@
 import numpy as np
 import open3d as o3d
+import inspect
 from typing import Optional, Any
 
 from data_processing import DataProcessing
@@ -36,15 +37,21 @@ def main(args: Optional[Any] = None) -> None:
             projected_points, 
             heat_map_path=config_file['2Dfile_paths']['heat_map']
         )
+        
+    except ValueError as ve:
+        dp.dm.cm.logger.exception(
+            f"Value has the error. Check the value--> {ve}", 
+            f"[{__name__}] "
+        )  
     
     except TypeError as te:
         dp.dm.cm.logger.exception(
-            f"Type has the error. Check the type--> {te}", 
+            f"Data type has the error. Check the Data type--> {te}", 
             f"[{__name__}] "
         )
     except KeyError as ke:
         dp.dm.cm.logger.exception(
-            f"Key has the error. Check the yaml file--> {ke}", 
+            f"Key has the error. Check the yaml file--> {ke}",
             f"[{__name__}] "
         )
     except Exception as e:

@@ -15,7 +15,7 @@ log_settings:
 
 algorithm_settings:
   noise_removal:
-    algorithms: 'statistical'
+    algorithms: 'statistical1'
     params:
       nb_neighbors: 20
       std_ratio: 2.0
