@@ -1,6 +1,5 @@
 import numpy as np
 import open3d as o3d
-import inspect
 from typing import Optional, Any
 
 from data_processing import DataProcessing
@@ -13,7 +12,7 @@ def main(args: Optional[Any] = None) -> None:
         # load image path, yaml file
         img_3d_path, config_file = dp.dm.cm.get_img_path()
 
-        # remov noise
+        # 3D 노이즈 삭제
         img_3d: o3d.geometry.PointCloud = dp.remove_noise(
             img_3d_path, 
             algorithm=config_file['algorithm_settings']['noise_removal']['algorithms'], 

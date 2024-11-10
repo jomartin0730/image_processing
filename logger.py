@@ -1,11 +1,10 @@
 import logging
-from typing import Optional
 
 class Logger:
     def __init__(self, path: str, file: bool, print: bool) -> None:
         self.setup_logger(path, file, print)
 
-    def setup_logger(self, path:str, file: bool, print: bool):
+    def setup_logger(self, path:str, file: bool, print: bool) -> None:
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.DEBUG)
         formatter = logging.Formatter(
@@ -36,16 +35,10 @@ class Logger:
         message = name + message
         self.logger.warning(message)
 
-    def error(self, message: str, name: str="") -> None:
+    def error(self, message: str, name: str="") -> None: # 사용자가 설정한 에러 메세지 기록
         message = name + message
         self.logger.error(message) 
 
-    def exception(self, message: str, name: str="") -> None:
+    def exception(self, message: str, name: str="") -> None: # 사용자가 설정한 에러 메세지 기록 + Trackback 기록
         message = name + message
         self.logger.exception(message) 
-
-
-# Logger Test code
-# Log = Logger('log/test.log')
-# Log.info("Info Test")
-# Log.error("Error Test")

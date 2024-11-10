@@ -1,12 +1,24 @@
-2024-11-09 12:24:44 [INFO] Correct path: data/sample_data.pcd
-2024-11-09 12:24:44 [INFO] Successfully read pcd_file from data/sample_data.pcd
-2024-11-09 12:24:44 [INFO] Number of points after noise removal: 456450
-2024-11-09 12:24:44 [INFO] Number of projected points: 456450
-2024-11-09 12:24:44 [INFO] Calculated to max depth 0.929669976234436, min depth -1.1238000392913818
-2024-11-09 12:24:45 [INFO] Depth map parameters: 10000, data/depth_map.png
-2024-11-09 12:24:45 [INFO] Correct path: data/depth_map.png
-2024-11-09 12:24:45 [INFO] Depth map saved at data/depth_map.png
-2024-11-09 12:24:45 [INFO] Calculated to max depth 0.929669976234436, min depth -1.1238000392913818
-2024-11-09 12:24:45 [INFO] Heat map parameters: 30000, data/heat_map.png
-2024-11-09 12:24:45 [INFO] Correct path: data/heat_map.png
-2024-11-09 12:24:45 [INFO] Heat map saved at data/heat_map.png
+2024-11-10 13:51:19 [INFO] Correct path: data/sample_data.pcd
+2024-11-10 13:51:19 [INFO] Successfully read pcd_file from data/sample_data.pcd
+2024-11-10 13:51:20 [INFO] Number of points after noise removal: 456450
+2024-11-10 13:51:20 [INFO] Number of projected points: 456450
+2024-11-10 13:51:20 [INFO] Calculated to max depth 0.929669976234436, min depth -1.1238000392913818
+2024-11-10 13:51:21 [INFO] Depth map parameters: 10000, result/depth_map.png
+2024-11-10 13:51:21 [INFO] Correct path: result/depth_map.png
+2024-11-10 13:51:21 [INFO] Depth map saved at result/depth_map.png
+2024-11-10 13:51:21 [INFO] Calculated to max depth 0.929669976234436, min depth -1.1238000392913818
+2024-11-10 13:51:21 [INFO] Heat map parameters: 30000, result/heat_map.png
+2024-11-10 13:51:21 [INFO] Correct path: result/heat_map.png
+2024-11-10 13:51:21 [INFO] Heat map saved at result/heat_map.png
+2024-11-10 14:00:57 [INFO] Correct path: data/sample_data.pcd
+2024-11-10 14:00:57 [INFO] Successfully read pcd_file from data/sample_data.pcd
+2024-11-10 14:00:57 [INFO] Number of points after noise removal: 456450
+2024-11-10 14:00:57 [INFO] Number of projected points: 456450
+2024-11-10 14:00:57 [INFO] Calculated to max depth 0.929669976234436, min depth -1.1238000392913818
+2024-11-10 14:00:58 [INFO] Depth map parameters: 10000, result/depth_map.png
+2024-11-10 14:00:58 [INFO] Correct path: result/depth_map.png
+2024-11-10 14:00:58 [INFO] Depth map saved at result/depth_map.png
+2024-11-10 14:00:58 [INFO] Calculated to max depth 0.929669976234436, min depth -1.1238000392913818
+2024-11-10 14:00:58 [INFO] Heat map parameters: 30000, result/heat_map.png
+2024-11-10 14:00:58 [INFO] Correct path: result/heat_map.png
+2024-11-10 14:00:58 [INFO] Heat map saved at result/heat_map.png

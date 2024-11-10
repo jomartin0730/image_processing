@@ -5,8 +5,8 @@
     path: 'data/sample_data.ply'
 
 2Dfile_paths:
-    depth_map: 'data/depth_map.png'
-    heat_map: 'data/heat_map.png'
+    depth_map: 'result/depth_map.png'
+    heat_map: 'result/heat_map.png'
 
 log_settings:
     path: 'log/total.log'
@@ -23,4 +23,4 @@ algorithm_settings:
     # params:
     #   nb_points: 16
     #   radius: 0.05
-  projection_vector: [1, 0, 0]  # 투영 방향 설정
+  projection_vector: [1, 0, 0]
