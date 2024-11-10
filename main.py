@@ -5,7 +5,18 @@ from typing import Optional, Any
 from data_processing import DataProcessing
 
 
+
 def main(args: Optional[Any] = None) -> None:
+    """
+    3D 포인트 클라우드 데이터 처리 및 2D 투영 시스템 프로젝트
+
+    Classes:
+        DataProcessing    : 3D 이미지 처리 및 2D 맵 생성을 담당
+        DataManager       : Depth 계산 및 이미지 저장을 담당
+        ConfigFileManager : 설정 파일 관리 및 설정 파일에서 발생하는 에러 관리를 담당
+        Logger            : 콘솔 출력 및 로그 파일에 기록을 위한 로그 셋업을 담당
+
+    """
     try:
         dp: DataProcessing = DataProcessing()
 
